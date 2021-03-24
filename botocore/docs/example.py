@@ -11,7 +11,7 @@
 # ANY KIND, either express or implied. See the License for the specific
 # language governing permissions and limitations under the License.
 from botocore.docs.shape import ShapeDocumenter
-from botocore.docs.utils import py_default
+from botocore.docs.utils import py_default, DocumentedShape
 
 
 class BaseExampleDocumenter(ShapeDocumenter):

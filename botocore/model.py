@@ -13,7 +13,8 @@
 """Abstractions to interact with service models."""
 from collections import defaultdict
 
-from botocore.utils import CachedProperty, instance_cache, hyphenize_service_id
+from botocore.utils import (CachedProperty, instance_cache,
+                            hyphenize_service_id)
 from botocore.compat import OrderedDict
 from botocore.exceptions import MissingServiceIdError
 from botocore.exceptions import UndefinedModelAttributeError
@@ -55,7 +56,7 @@ class Shape(object):
                         'jsonvalue', 'timestampFormat', 'hostLabel']
     METADATA_ATTRS = ['required', 'min', 'max', 'sensitive', 'enum',
                       'idempotencyToken', 'error', 'exception',
-                      'endpointdiscoveryid', 'retryable']
+                      'endpointdiscoveryid', 'retryable', 'document']
     MAP_TYPE = OrderedDict
 
     def __init__(self, shape_name, shape_model, shape_resolver=None):
@@ -137,6 +138,7 @@ class Shape(object):
             * sensitive
             * required
             * idempotencyToken
+            * document
 
         :rtype: dict
         :return: Metadata about the shape.
@@ -175,7 +177,7 @@ class Shape(object):
 class StructureShape(Shape):
     @CachedProperty
     def members(self):
-        members = self._shape_model['members']
+        members = self._shape_model.get('members', self.MAP_TYPE())
         # The members dict looks like:
         #    'members': {
         #        'MemberName': {'shape': 'shapeName'},
@@ -204,6 +206,10 @@ class StructureShape(Shape):
             return code
         # Use the exception name if there is no explicit code modeled
         return self.name
+
+    @CachedProperty
+    def is_document_type(self):
+        return self.metadata.get('document', False)
 
 
 class ListShape(Shape):

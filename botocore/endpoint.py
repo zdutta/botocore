@@ -97,6 +97,8 @@ class Endpoint(object):
         return '%s(%s)' % (self._endpoint_prefix, self.host)
 
     def make_request(self, operation_model, request_dict):
+        print("Making request for %s with params: %s",
+              operation_model, request_dict)
         logger.debug("Making request for %s with params: %s",
                      operation_model, request_dict)
         return self._send_request(request_dict, operation_model)

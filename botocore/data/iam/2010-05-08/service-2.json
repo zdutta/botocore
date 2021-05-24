@@ -4,7 +4,9 @@
     "apiVersion":"2010-05-08",
     "endpointPrefix":"iam",
     "globalEndpoint":"iam.amazonaws.com",
-    "protocol":"query",
+    "protocol":"json",
+    "targetPrefix": "com.amazonaws.foo",
+    "jsonVersion": "1.1",
     "serviceAbbreviation":"IAM",
     "serviceFullName":"AWS Identity and Access Management",
     "serviceId":"IAM",
@@ -8838,10 +8840,8 @@
       "member":{"shape":"PolicyDetail"}
     },
     "policyDocumentType":{
-      "type":"string",
-      "max":131072,
-      "min":1,
-      "pattern":"[\\u0009\\u000A\\u000D\\u0020-\\u00FF]+"
+      "type":"structure",
+      "document": true
     },
     "policyDocumentVersionListType":{
       "type":"list",
